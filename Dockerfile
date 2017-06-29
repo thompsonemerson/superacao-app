@@ -2,7 +2,7 @@ FROM     ubuntu:14.04.4
 
 ENV DEBIAN_FRONTEND=noninteractive \
     ANDROID_HOME=/opt/android-sdk-linux \
-    NODE_VERSION=6.9.1 \
+    NODE_VERSION=7.4.0 \
     SUPERACAO=/superacao-app
 
 # Install basics
@@ -13,8 +13,8 @@ RUN apt-get update &&  \
     tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
     rm "node-v$NODE_VERSION-linux-x64.tar.gz" && \
     npm install -g npm && \
-    npm install -g cordova ionic && \
-    npm install -g nodemon && \
+    npm install -g cordova && \
+    npm install -g ionic@3.0.0 && \
     npm cache clear && \
 
 #ANDROID

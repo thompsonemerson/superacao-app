@@ -3,7 +3,7 @@ import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { UserStorageService } from '../../../providers/database/user-storage-service';
 import { MySpaceStorageService } from '../../../providers/database/my-space-storage-service';
 import { MySpaceMedicinesEventPage } from './event/medicines-event';
-import { LocalNotifications } from 'ionic-native';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
 @Component({
@@ -11,16 +11,17 @@ import { LocalNotifications } from 'ionic-native';
   templateUrl: 'medicines.html'
 })
 export class MySpaceMedicinesPage {
-  user : any;
-  medicines : any;
-  date : any;
+  user;
+  medicines;
+  date;
 
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public userStorageService : UserStorageService,
     public mySpaceStorageService: MySpaceStorageService,
-    public modalCtrl : ModalController) {
+    public modalCtrl : ModalController,
+    public localNotifications: LocalNotifications) {
 
   }
 
@@ -48,7 +49,7 @@ export class MySpaceMedicinesPage {
       }
       let id = 1;
 
-      LocalNotifications.schedule({
+      this.localNotifications.schedule({
          text: 'Medicamento notificação!',
          at: _5_sec_from_now,
          led: 'FF0000',
@@ -56,9 +57,9 @@ export class MySpaceMedicinesPage {
          sound: null
       });
 
-      LocalNotifications.on('trigger',(notification) => {
+      this.localNotifications.on('trigger',(notification) => {
         if(notification == id) {
-          LocalNotifications.schedule({
+          this.localNotifications.schedule({
             text: 'Medicamento notificação!',
             at: _5_sec_from_now,
             led: 'FF0000',
@@ -82,7 +83,7 @@ export class MySpaceMedicinesPage {
         {
           text: 'Sim',
           handler: data => {
-            LocalNotifications.clearAll();
+            this.localNotifications.clearAll();
             this.mySpaceStorageService.removeMedicineEvent(this.user.$key, medicine).then(() => {
               this.medicines = this.mySpaceStorageService.getMedicinesEvents(this.user.$key)
             });

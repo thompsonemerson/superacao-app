@@ -10,8 +10,8 @@ import { UserStorageService } from '../../providers/database/user-storage-servic
 })
 
 export class ProfilePage {
-  user : any;
-  thumbClass: any;
+  user;
+  thumbClass;
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +24,6 @@ export class ProfilePage {
       this.user = user;
       this._verifyClassOfThumb();
     });
-
   }
 
   openEdit() {
@@ -37,25 +36,45 @@ export class ProfilePage {
   }
 
   verifyRelationship(relationship) {
-    if(relationship == 1) {
-      return 'Solteiro(a)'
-    } else if (relationship == 2) {
+    this.parseInt(relationship);
+    if(relationship == 0) {
+      return 'Solteiro(a)';
+    } else if (relationship == 1) {
       return 'Casado(a)';
-    } else if (relationship == 3) {
+    } else if (relationship == 2) {
       return 'Divorciado(a)';
     }
   }
 
-  _verifyClassOfThumb() {
-    if(this.user.type_user == 'Superador') {
-      this.thumbClass = 'background-color-overcomer';
-    } else if (this.user.type_user == 'Anjo') {
-      this.thumbClass = 'background-color-angel';
+  verifyParticipant(participant) {
+    this.parseInt(participant);
+    if(participant == 0) {
+      return 'Paciente';
+    } else if (participant == 1) {
+      return 'Mãe';
+    } else if (participant == 2) {
+      return 'Pai';
+    } else if (participant == 3) {
+      return 'Filho(a)';
+    } else if (participant == 4) {
+      return 'Irmão(a)'
+    } else if (participant == 5) {
+      return 'Parente';
+    } else if (participant == 6) {
+      return 'Outro';
     }
   }
 
   parseInt(value) {
     return +value;
+  }
+
+  private _verifyClassOfThumb() {
+    if(this.user.type_user == 'Superador') {
+      this.thumbClass = 'background-color-overcomer';
+    } else if (this.user.type_user == 'Anjo') {
+      this.thumbClass = 'background-color-angel';
+    }
   }
 
 

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title> Criar evento </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="calendar">
+  <ion-item>
+    <ion-row (click)="addEvent('Consulta')">
+      <ion-col col-2> <span class="Consulta"> </span> </ion-col>
+      <ion-col col-9> Consulta </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row (click)="addEvent('Exame')">
+      <ion-col col-2> <span class="Exame"> </span> </ion-col>
+      <ion-col col-9> Exame </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row (click)="addEvent('Procedimento')">
+      <ion-col col-2> <span class="Procedimento"> </span> </ion-col>
+      <ion-col col-9> Procedimento </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row (click)="addEvent('Internação')">
+      <ion-col col-2> <span class="Internação"> </span> </ion-col>
+      <ion-col col-9> Internação </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row (click)="addEvent('Pessoal')">
+      <ion-col col-2> <span class="Pessoal"> </span> </ion-col>
+      <ion-col col-9> Evento pessoal </ion-col>
+  </ion-row>
+  </ion-item>
+</ion-content>

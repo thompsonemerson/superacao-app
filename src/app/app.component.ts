@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Platform, MenuController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { UserStorageService } from '../providers/database/user-storage-service';
 import { AuthService } from '../providers/database/auth-service';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { LoginPage } from '../pages/login/login';
+import { AuthPage } from '../pages/auth/auth';
+//import { LoginPage } from '../pages/login/login';
 import { ProfilePage } from '../pages/profile/profile';
 import { RegisterBasicDatas } from '../pages/register/basic-datas/basic-datas';
 
@@ -20,25 +22,32 @@ export class MyApp {
   profilePage : any = ProfilePage;
 
   constructor(
-    public platform: Platform,
-    public menuCtrl: MenuController,
-    public userStorageService: UserStorageService,
-    public authService : AuthService) {
+    private platform: Platform,
+    private menuCtrl: MenuController,
+    private userStorageService: UserStorageService,
+    private authService : AuthService,
+    public splashScreen: SplashScreen,
+    public statusBar: StatusBar
+  ) {
 
-      platform.ready().then(() => {
-        this.authService.getAuthentication().subscribe((state) =>{
-          if(state !== null) {
-            this.menuCtrl.enable(true);
-            this.rootPage = TabsPage;
-          } else {
-            this.menuCtrl.enable(false);
-            this.rootPage = LoginPage;
-          }
-        });
-
-        StatusBar.styleDefault();
-        Splashscreen.hide();
+    platform.ready().then(() => {
+      this.authService.getAuthentication().subscribe((state) =>{
+        if(state !== null) {
+          this.menuCtrl.enable(true);
+          this.rootPage = TabsPage;
+        } else {
+          this.menuCtrl.enable(false);
+          this.rootPage = AuthPage;
+        }
       });
+
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
+  }
+
+  private _updateLastAccess(user) {
+    this.userStorageService.updateLastAccess(new Date().getTime(), user.$key);
   }
 
   openPage(page) {
@@ -49,7 +58,5 @@ export class MyApp {
     this.authService.signOut();
   }
 
-  _updateLastAccess(user) {
-    this.userStorageService.updateLastAccess(new Date().getTime(), user.$key);
-  }
+
 }

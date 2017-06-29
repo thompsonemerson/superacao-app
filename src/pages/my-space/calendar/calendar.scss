@@ -1,0 +1,112 @@
+.calendar {
+  @each $name, $value in $event-colors {
+    .#{$name} {
+      display: block;
+      width: 1.3rem;
+      height: 1.3rem;
+      margin-top: 5px;
+      border-radius: 100%;
+      background: $value;
+    }
+    ion-item {
+      padding: 0;
+      color: $text-primary;
+      font-size: 1.7rem;
+      > * {
+        padding: 0 $spacing-elements
+      }
+    }
+  }
+
+  .event-title {
+    display: inline-block;
+    margin-left: 1rem;
+    span {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  .schedule {
+    > *:first-child {
+      border-top: solid 1px #DDDDDD;
+    }
+    ion-item {
+      text-align: center;
+      color: $text-primary;
+      font-size: 1.6rem;
+      background-color: $background-color-dark;
+      border-bottom: solid 1px #DDDDDD !important;
+      .item-inner {
+        border: none;
+      }
+    }
+  }
+
+  .public-event {
+    .mark {
+      width: 15px;
+      height: 15px;
+      margin-top: 15px;
+    }
+    h3 {
+      font-weight: bold;
+      color: $text-primary;
+      text-align: center;
+    }
+    .item {
+      background: #FFF;
+      border-bottom: solid 1px #ddd;
+    }
+    .title {
+      margin: 0;
+      font-size: 2.2rem;
+      text-align: center;
+      color: $text-primary;
+    }
+    .subtitle {
+      margin: 0;
+      font-size: 1.6rem;
+      text-align: center;
+      color: $text-secondary;
+    }
+    .time {
+      margin-top: 10px;
+    }
+    .empty {
+      padding-top: 10px;
+      font-size: 1.6rem;
+      text-align: center;
+      color: $text-secondary;
+    }
+  }
+}
+
+page-calendar-event-edit {
+  .event-itens {
+    min-height: auto;
+  }
+}
+
+page-calendar-event-questions {
+  ion-col {
+    position: relative;
+    color: $text-primary;
+    &:nth-child(2) {
+      text-align: right;
+    }
+  }
+  ion-icon {
+    font-size: 2rem;
+  }
+  .list-header-md, .list-header-ios {
+    font-size: $font-size;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    background-color: #efefef;
+    border: none;
+  }
+  .list-ios {
+    margin: 0;
+  }
+}

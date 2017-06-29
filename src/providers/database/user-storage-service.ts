@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core'
 import { AngularFire } from 'angularfire2'
 import { Observable } from 'rxjs/Observable'
 import { Utils } from '../util/utils'
-import * as firebase from 'firebase'
+import { UserModel } from '../../model/user';
 import 'rxjs/Observable'
 
 @Injectable()
 
 export class UserStorageService {
-  private db : any
+  private db : any;
 
   constructor(
     private af: AngularFire,
@@ -16,31 +16,20 @@ export class UserStorageService {
   }
 
 
-  registerUser(result, user) {
-    result.photoURL = result.auth.photoURL
-    result.name = result.auth.displayName || user.name
-    result.email = result.auth.email
-
-    let data = {
-      provider : result.provider,
-      name : result.name,
-      email: result.email || null,
-      avatar: result.photoURL || "https://placehold.it/150x150",
-      emotion: {
-        status: "Normal",
-        img: "./assets/images/happy.svg",
-        is_active: 0
-      },
-      type_user: "Normal",
-      other_datas: {
-          token_device: "",
-          active: "1",
-          last_access: new Date().getTime()
-      }
-    }
-
-    this.db = this.af.database.object(`/users/${result.uid}`)
-    this.db.set(data)
+  registerUser(result) {
+    let user = new UserModel();
+    user.avatar = result.photoURL || 'https://placehold.it/150x150';
+    user.name = result.name || result.displayName;
+    user.email = result.email;
+    user.type_user = 'Normal';
+    user.religion = 5;
+    user.emotion = {
+      img: './assets/images/emoji-happy.svg',
+      is_active: 0,
+      status: 'Normal'
+    };
+    this.db = this.af.database.object(`/users/${result.uid}`);
+    this.db.set(user);
   }
 
   getUser() {
@@ -61,8 +50,8 @@ export class UserStorageService {
       this.af.auth.subscribe((user) => {
         if(user) {
           this.af.database.object(`/users/${user.uid}`).subscribe((data) => {
-              subject.next(data)
-              datas = data
+            subject.next(data)
+            datas = data
           })
         }
       })
